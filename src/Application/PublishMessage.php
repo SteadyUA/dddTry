@@ -4,22 +4,23 @@ namespace Numbers\Application;
 
 use Numbers\Application\MessageBus\PublisherInterface;
 
-class MessagePublisher extends AbstractMiddleware
+class PublishMessage extends AbstractMiddleware
 {
-    private $messagePublisher;
+    /** @var PublisherInterface */
+    private $publisher;
 
     /** @var LimitChecker */
     private $limitChecker;
 
     public function __construct(PublisherInterface $messagePublisher, LimitChecker $limitChecker)
     {
-        $this->messagePublisher = $messagePublisher;
+        $this->publisher = $messagePublisher;
         $this->limitChecker = $limitChecker;
     }
 
     public function execute(Message $message = null): void
     {
-        $this->messagePublisher->publish($message);
+        $this->publisher->publish($message);
         $this->executeNext($message);
         if ($this->limitChecker->isLimitReached()) {
             exit(0);

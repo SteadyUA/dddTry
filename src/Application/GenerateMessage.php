@@ -4,7 +4,7 @@ namespace Numbers\Application;
 
 use Numbers\Domain\AbstractSequenceService;
 
-class MessageGenerator extends AbstractMiddleware
+class GenerateMessage extends AbstractMiddleware
 {
     private $sequence;
 

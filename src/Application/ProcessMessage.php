@@ -6,7 +6,7 @@ use Numbers\Application\Persistence\PersistenceManager;
 use Numbers\Domain\SumCounterService;
 use Throwable;
 
-class MessageProcessor extends AbstractMiddleware
+class ProcessMessage extends AbstractMiddleware
 {
     private $manager;
     private $service;

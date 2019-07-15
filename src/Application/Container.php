@@ -18,12 +18,12 @@ class Container
         $this->config = $config;
     }
 
-    public function set($name, callable $holder)
+    public function set(string $name, callable $factory)
     {
-        $this->service[$name] = $holder;
+        $this->service[$name] = $factory;
     }
 
-    public function get($name)
+    public function get(string $name)
     {
         if (false == isset($this->instance[$name])) {
             if (false == isset($this->service[$name])) {

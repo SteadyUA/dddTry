@@ -5,7 +5,7 @@ namespace Numbers\Application;
 use Numbers\Application\MessageBus\ConsumerInterface;
 use Throwable;
 
-class MessageConsumer extends AbstractMiddleware
+class ConsumeMessage extends AbstractMiddleware
 {
     private $consumer;
     private $limitChecker;
