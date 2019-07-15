@@ -18,18 +18,19 @@ class SumCounterRepository implements SumCounterRepositoryInterface
         $this->storage = $storage;
     }
 
-    public function save(SumCounterAggregate $aggregate): void
+    public function save(SumCounterAggregate $sumCounter): void
     {
         $data = [
-            $aggregate->sum()->id() => $aggregate->sum()->amount()->toString(),
-            $aggregate->counter()->id() => $aggregate->counter()->amount()
+            $sumCounter->sum()->id() => $sumCounter->sum()->amount()->toString(),
+            $sumCounter->counter()->id() => $sumCounter->counter()->amount()
         ];
         $this->storage->persist($data);
     }
 
-    public function sumCounterOf(string $id): SumCounterAggregate
+    public function sumCounterOf(string $sumCountId): SumCounterAggregate
     {
-        list($sumId, $counterId) = explode('-', $id);
+        // parse composite key
+        list($sumId, $counterId) = explode('-', $sumCountId);
 
         $data = $this->storage->restore();
         $sumAmount = $data[$sumId];

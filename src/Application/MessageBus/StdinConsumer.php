@@ -7,18 +7,18 @@ use Numbers\Domain\NumberValue;
 use RuntimeException;
 
 /**
- * For tests in cli pipe call
+ * For tests in cli pipeline call
  */
-class StreamConsumer implements ConsumerInterface
+class StdinConsumer implements ConsumerInterface
 {
     private $messageString = '';
     private $hasMessage = false;
     private $stream;
 
-    public function __construct($stream)
+    public function __construct()
     {
-        stream_set_blocking($stream, false);
-        $this->stream = $stream;
+        stream_set_blocking(STDIN, false);
+        $this->stream = STDIN;
     }
 
     public function pull(): ?Message

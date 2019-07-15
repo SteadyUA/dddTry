@@ -13,17 +13,17 @@ class CounterEntity
         $this->amount = $amount;
     }
 
-    public function increment()
+    public function increment(): void
     {
         $this->amount ++;
     }
 
-    public function amount()
+    public function amount(): int
     {
         return $this->amount;
     }
 
-    public function id()
+    public function id(): string
     {
         return $this->id;
     }

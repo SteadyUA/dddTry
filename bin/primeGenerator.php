@@ -12,8 +12,13 @@ $options = getopt('', ['count:', 'sleep:']);
 $count = $options['count'] ?? null;
 $sleepTime = $options['sleep'] ?? 20000; // 0.02sec
 
-$generateMessage = new GenerateMessage($container->get('service.prime.sequence'));
-$publishMessage = new PublishMessage($container->get('prime.publisher'), new LimitChecker($count));
+$generateMessage = new GenerateMessage(
+    $container->get('service.prime.sequence')
+);
+$publishMessage = new PublishMessage(
+    $container->get('prime.publisher'),
+    new LimitChecker($count)
+);
 $generateMessage->setNext($publishMessage);
 
 (new BasicWorker($generateMessage, $sleepTime))->run();

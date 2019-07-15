@@ -28,10 +28,6 @@ class ProcessMessage extends AbstractMiddleware
      */
     public function execute(Message $message = null): void
     {
-        if (null === $message) {
-            return;
-        }
-
         $this->manager->beginTransaction();
         try {
             $this->service->addNumber($this->sumCounterId, $message->number());

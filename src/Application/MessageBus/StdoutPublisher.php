@@ -6,15 +6,15 @@ use Numbers\Application\Message;
 use RuntimeException;
 
 /**
- * For tests in cli pipe call
+ * For tests in cli pipeline call
  */
-class StreamPublisher implements PublisherInterface
+class StdoutPublisher implements PublisherInterface
 {
     private $stream;
 
-    public function __construct($stream)
+    public function __construct()
     {
-        $this->stream = $stream;
+        $this->stream = STDOUT;
     }
 
     public function publish(Message $message): void

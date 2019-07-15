@@ -15,7 +15,7 @@ class BasicWorker
         $this->task = $task;
     }
 
-    public function run()
+    public function run(): void
     {
         while (true) {
             $this->task->execute(null);

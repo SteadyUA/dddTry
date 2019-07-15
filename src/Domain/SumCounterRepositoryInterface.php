@@ -4,6 +4,6 @@ namespace Numbers\Domain;
 
 interface SumCounterRepositoryInterface
 {
-    public function save(SumCounterAggregate $aggregate): void;
-    public function sumCounterOf(string $id): SumCounterAggregate;
+    public function save(SumCounterAggregate $sumCounter): void;
+    public function sumCounterOf(string $sumCountId): SumCounterAggregate;
 }

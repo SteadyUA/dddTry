@@ -1,6 +1,6 @@
 <?php
 
-use Numbers\Application\Container;
+use Numbers\Application\DiContainer;
 use Numbers\Application\MessageBus\RedisConsumer;
 use Numbers\Application\MessageBus\RedisPublisher;
 use Numbers\Application\Persistence\DbPersistence;
@@ -11,8 +11,8 @@ use Numbers\Domain\FibonacciSequenceService;
 use Numbers\Domain\PrimeSequenceService;
 use Numbers\Domain\SumCounterService;
 
-$container = new Container(include(__DIR__ . '/config.php'));
-$container->set('redis', function(Container $container) {
+$container = new DiContainer(include(__DIR__ . '/config.php'));
+$container->set('redis', function(DiContainer $container) {
     $redis = new Redis();
     $cfg = $container->cfg('redis');
     $redis->connect($cfg['host'], $cfg['port']);
@@ -24,31 +24,31 @@ $container->set('redis', function(Container $container) {
     }
     return $redis;
 });
-$container->set('fib.consumer', function(Container $container) {
+$container->set('fib.consumer', function(DiContainer $container) {
     return $consumer = new RedisConsumer(
         $container->get('redis'),
         $container->cfg('redis_stream_name')['fib']
     );
 });
-$container->set('fib.publisher', function(Container $container) {
+$container->set('fib.publisher', function(DiContainer $container) {
     return new RedisPublisher(
         $container->get('redis'),
         $container->cfg('redis_stream_name')['fib']
     );
 });
-$container->set('prime.consumer', function(Container $container) {
+$container->set('prime.consumer', function(DiContainer $container) {
     return $consumer = new RedisConsumer(
         $container->get('redis'),
         $container->cfg('redis_stream_name')['prime']
     );
 });
-$container->set('prime.publisher', function(Container $container) {
+$container->set('prime.publisher', function(DiContainer $container) {
     return new RedisPublisher(
         $container->get('redis'),
         $container->cfg('redis_stream_name')['prime']
     );
 });
-$container->set('db', function(Container $container) {
+$container->set('db', function(DiContainer $container) {
     $db = $container->cfg('db');
     $dsn = "mysql:dbname={$db['name']};host={$db['host']};port={$db['port']}";
     $user = $db['user'];
@@ -58,7 +58,7 @@ $container->set('db', function(Container $container) {
 $container->set('persistence.manager', function() {
     return new PersistenceManager();
 });
-$container->set('persistence.sumCounter', function(Container $container) {
+$container->set('persistence.sumCounter', function(DiContainer $container) {
 //    $persistence = new InMemoryPersistence(true);
     $persistence = new DbPersistence(
         $container->get('db'),
@@ -73,7 +73,7 @@ $container->set('service.fib.sequence', function() {
 $container->set('service.prime.sequence', function() {
     return new PrimeSequenceService();
 });
-$container->set('service.sumCounter', function(Container $container) {
+$container->set('service.sumCounter', function(DiContainer $container) {
     $persistence = $container->get('persistence.sumCounter');
     return new SumCounterService(new SumCounterRepository($persistence));
 });

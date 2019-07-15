@@ -7,7 +7,7 @@ use RuntimeException;
 /**
  * Simple dependency injections container
  */
-class Container
+class DiContainer
 {
     private $service = [];
     private $instance = [];
@@ -18,11 +18,15 @@ class Container
         $this->config = $config;
     }
 
-    public function set(string $name, callable $factory)
+    public function set(string $name, callable $factory): void
     {
         $this->service[$name] = $factory;
     }
 
+    /**
+     * @param string $name
+     * @return object
+     */
     public function get(string $name)
     {
         if (false == isset($this->instance[$name])) {
@@ -35,6 +39,10 @@ class Container
         return $this->instance[$name];
     }
 
+    /**
+     * @param string $optName
+     * @return mixed|null
+     */
     public function cfg(string $optName)
     {
         return $this->config[$optName] ?? null;

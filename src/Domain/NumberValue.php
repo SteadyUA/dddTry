@@ -10,11 +10,7 @@ class NumberValue
 
     public function __construct(string $value)
     {
-        if (false == ctype_digit($value)) {
-            throw new InvalidArgumentException('Not decimal number passed.');
-        }
-
-        $this->value = $value;
+        $this->setValue($value);
     }
 
     public function toString(): string
@@ -22,12 +18,12 @@ class NumberValue
         return $this->value;
     }
 
-    public function add(NumberValue $number)
+    public function add(NumberValue $number): NumberValue
     {
         return new static(bcadd($this->value, $number->value));
     }
 
-    public function equals(NumberValue $number)
+    public function equals(NumberValue $number): bool
     {
         return $this->value == $number->value;
     }
@@ -35,5 +31,13 @@ class NumberValue
     public function compareTo(NumberValue $number): int
     {
         return bccomp($this->value, $number->value);
+    }
+
+    private function setValue($value)
+    {
+        if (false == ctype_digit($value)) {
+            throw new InvalidArgumentException('Not decimal number passed.');
+        }
+        $this->value = $value;
     }
 }

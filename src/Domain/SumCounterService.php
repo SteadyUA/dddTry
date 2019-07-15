@@ -12,7 +12,7 @@ class SumCounterService
         $this->repository = $repository;
     }
 
-    public function addNumber(string $sumCountId, NumberValue $numberValue)
+    public function addNumber(string $sumCountId, NumberValue $numberValue): void
     {
         $sumCount = $this->repository->sumCounterOf($sumCountId);
 

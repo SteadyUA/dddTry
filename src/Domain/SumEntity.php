@@ -15,7 +15,7 @@ class SumEntity
         $this->amount = $numberValue;
     }
 
-    public function add(NumberValue $numberValue)
+    public function add(NumberValue $numberValue): void
     {
         $this->amount = $this->amount->add($numberValue);
     }

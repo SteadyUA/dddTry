@@ -8,7 +8,7 @@ use Redis;
 
 class RedisConsumer implements ConsumerInterface
 {
-    const GROUP_NAME = 'numbers1';
+    const GROUP_NAME = 'numbers';
     const CONSUMER_NAME = 'consumer';
 
     private $redis;
@@ -19,15 +19,7 @@ class RedisConsumer implements ConsumerInterface
     {
         $this->redis = $redis;
         $this->streamName = $streamName;
-
-        // create stream
-        if ($redis->exists($streamName) == 0) {
-            if ($redis->xAdd($streamName, '0-1', ['ctrl' => 'init'])) {
-                $redis->xDel($streamName, ['0-1']);
-            }
-        }
-        // create group
-        $redis->xGroup('CREATE', $streamName, self::GROUP_NAME, '0');
+        $this->createStreamAndGroup();
     }
 
     public function pull(): ?Message
@@ -50,5 +42,21 @@ class RedisConsumer implements ConsumerInterface
     public function ack(): void
     {
         $this->redis->xAck($this->streamName, self::GROUP_NAME, [$this->currentId]);
+    }
+
+    private function createStreamAndGroup(): void
+    {
+        $streamName = $this->streamName;
+        $redis = $this->redis;
+
+        // create stream
+        if ($redis->exists($streamName) == 0) {
+            if ($redis->xAdd($streamName, '0-1', ['ctrl' => 'init'])) {
+                $redis->xDel($streamName, ['0-1']);
+            }
+        }
+
+        // create group
+        $redis->xGroup('CREATE', $streamName, self::GROUP_NAME, '0');
     }
 }

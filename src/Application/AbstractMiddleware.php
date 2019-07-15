@@ -17,7 +17,7 @@ abstract class AbstractMiddleware
         return $next;
     }
 
-    public function executeNext(Message $message)
+    public function executeNext(Message $message): void
     {
         if (null !== $this->next) {
             $this->next->execute($message);
