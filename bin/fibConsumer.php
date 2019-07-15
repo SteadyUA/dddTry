@@ -12,15 +12,15 @@ $options = getopt('', ['count:', 'sleep:']);
 $count = $options['count'] ?? null;
 $sleepTime = $options['sleep'] ?? 20000; // 0.02sec
 
-$consumeWare = new MessageConsumer(
-    $container->get('fib.consumer')
-);
-$consumeWare->setNext(new MessageProcessor(
+$consumeWare = new MessageConsumer($container->get('fib.consumer'));
+$processWare = new MessageProcessor(
     $container->get('persistence.manager'),
     $container->get('service.sumCounter'),
     'sum-count_fib'
-))->setNext(
-    new LimitChecker($count)
 );
+$consumeWare->setNext($processWare);
+if (null !== $count) {
+    $processWare->setNext(new LimitChecker($count));
+}
 
 (new BasicWorker($consumeWare, $sleepTime))->run();

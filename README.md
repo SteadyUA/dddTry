@@ -14,9 +14,9 @@ $ php bin/reset.php
 ```
 - Message consumer command example
 ```
-$ php bin/fibConsumer.php --count=1000 [--sleep=]
+$ php bin/fibConsumer.php [--count=] [--sleep=20000]
 ```
 - Message generator command example
 ```
-$ php bin/fibGenerator.php --count=1000 [--sleep=]
+$ php bin/fibGenerator.php [--count=] [--sleep=20000]
 ```
