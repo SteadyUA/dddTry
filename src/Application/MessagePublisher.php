@@ -8,14 +8,21 @@ class MessagePublisher extends AbstractMiddleware
 {
     private $messagePublisher;
 
-    public function __construct(PublisherInterface $messagePublisher)
+    /** @var LimitChecker */
+    private $limitChecker;
+
+    public function __construct(PublisherInterface $messagePublisher, LimitChecker $limitChecker)
     {
         $this->messagePublisher = $messagePublisher;
+        $this->limitChecker = $limitChecker;
     }
 
     public function execute(Message $message = null): void
     {
         $this->messagePublisher->publish($message);
         $this->executeNext($message);
+        if ($this->limitChecker->isLimitReached()) {
+            exit(0);
+        }
     }
 }

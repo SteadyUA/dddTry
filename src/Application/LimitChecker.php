@@ -4,26 +4,28 @@ namespace Numbers\Application;
 
 use InvalidArgumentException;
 
-class LimitChecker extends AbstractMiddleware
+class LimitChecker
 {
     private $limit;
 
-    public function __construct(int $limit)
+    public function __construct(int $limit = null)
     {
         $this->setLimit($limit);
     }
 
-    public function execute(Message $message = null): void
+    public function isLimitReached(): bool
     {
-        $this->limit --;
-        if ($this->limit < 1) {
-            exit(0);
+        if (null == $this->limit) {
+            return false;
         }
+        $this->limit --;
+
+        return $this->limit < 1;
     }
 
-    private function setLimit(int $limit): void
+    private function setLimit(int $limit = null): void
     {
-        if ($limit < 1) {
+        if (null !== $limit && $limit < 1) {
             throw new InvalidArgumentException('Invalid limit.');
         }
 

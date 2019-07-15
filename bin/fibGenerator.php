@@ -13,10 +13,7 @@ $count = $options['count'] ?? null;
 $sleepTime = $options['sleep'] ?? 20000; // 0.02sec
 
 $generatorWare = new MessageGenerator($container->get('service.fib.sequence'));
-$publisherWare = new MessagePublisher($container->get('fib.publisher'));
+$publisherWare = new MessagePublisher($container->get('fib.publisher'), new LimitChecker($count));
 $generatorWare->setNext($publisherWare);
-if (null !== $count) {
-    $publisherWare->setNext(new LimitChecker($count));
-}
 
 (new BasicWorker($generatorWare, $sleepTime))->run();
