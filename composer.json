@@ -1,0 +1,21 @@
+{
+    "require": {
+        "php": "^7.1",
+        "ext-ctype": "*",
+        "ext-bcmath": "*",
+        "ext-pdo": "*",
+        "ext-redis": ">=4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Numbers\\": "src"
+        }
+    },
+    "bin": [
+        "bin/reset.php",
+        "bin/fibGenerator.php",
+        "bin/fibConsumer.php",
+        "bin/primeGenerator.php",
+        "bin/primeConsumer.php"
+    ]
+}
