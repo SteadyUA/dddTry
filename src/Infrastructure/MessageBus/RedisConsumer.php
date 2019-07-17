@@ -1,9 +1,7 @@
 <?php
 
-namespace Numbers\Application\MessageBus;
+namespace Numbers\Infrastructure\MessageBus;
 
-use Numbers\Application\Message;
-use Numbers\Domain\NumberValue;
 use Redis;
 
 class RedisConsumer implements ConsumerInterface
@@ -36,7 +34,7 @@ class RedisConsumer implements ConsumerInterface
         $this->currentId = key($messages[$this->streamName]);
         $data = $messages[$this->streamName][$this->currentId];
 
-        return new Message(new NumberValue($data['num']), $data['id']);
+        return new Message($data['num'], $data['id']);
     }
 
     public function ack(): void

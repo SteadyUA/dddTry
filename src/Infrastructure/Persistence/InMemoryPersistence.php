@@ -1,6 +1,6 @@
 <?php
 
-namespace Numbers\Application\Persistence;
+namespace Numbers\Infrastructure\Persistence;
 
 /**
  * for debug and tests

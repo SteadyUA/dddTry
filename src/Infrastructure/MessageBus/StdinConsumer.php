@@ -1,9 +1,7 @@
 <?php
 
-namespace Numbers\Application\MessageBus;
+namespace Numbers\Infrastructure\MessageBus;
 
-use Numbers\Application\Message;
-use Numbers\Domain\NumberValue;
 use RuntimeException;
 
 /**
@@ -28,7 +26,7 @@ class StdinConsumer implements ConsumerInterface
             return null;
         }
         list($id, $number) = explode("\t", $this->messageString);
-        $message = new Message(new NumberValue($number), $id);
+        $message = new Message($number, $id);
 
         return $message;
     }

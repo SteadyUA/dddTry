@@ -2,7 +2,8 @@
 
 namespace Numbers\Application;
 
-use Numbers\Application\MessageBus\ConsumerInterface;
+use Numbers\Infrastructure\MessageBus\ConsumerInterface;
+use Numbers\Infrastructure\MessageBus\Message;
 use Throwable;
 
 class ConsumeMessage extends AbstractMiddleware

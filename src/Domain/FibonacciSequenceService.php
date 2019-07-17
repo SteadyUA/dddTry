@@ -8,17 +8,13 @@ class FibonacciSequenceService extends AbstractSequenceService
 {
     protected function getGenerator(): Generator
     {
-        $current = new NumberValue('0');
-        $previous = null;
+        $previous = new NumberValue('0');
+        yield $previous;
+        $next = new NumberValue('1');
         while (true) {
-            yield $current;
-            if (null == $previous) {
-                $nextNumber = new NumberValue('1');
-            } else {
-                $nextNumber = $current->add($previous);
-            }
-            $previous = $current;
-            $current = $nextNumber;
+            $next = $next->add($previous);
+            yield $next;
+            $previous = $next;
         }
     }
 }

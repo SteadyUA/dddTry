@@ -1,8 +1,7 @@
 <?php
 
-namespace Numbers\Application\MessageBus;
+namespace Numbers\Infrastructure\MessageBus;
 
-use Numbers\Application\Message;
 use RuntimeException;
 
 /**
@@ -19,7 +18,7 @@ class StdoutPublisher implements PublisherInterface
 
     public function publish(Message $message): void
     {
-        $messageString = "{$message->id()}\t{$message->number()->toString()}\n";
+        $messageString = "{$message->id()}\t{$message->number()}\n";
         $this->write($messageString);
     }
 

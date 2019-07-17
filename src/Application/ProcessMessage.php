@@ -2,8 +2,8 @@
 
 namespace Numbers\Application;
 
-use Numbers\Application\Persistence\PersistenceManager;
-use Numbers\Domain\SumCounterService;
+use Numbers\Infrastructure\MessageBus\Message;
+use Numbers\Infrastructure\Persistence\TransactionManager;
 use Throwable;
 
 class ProcessMessage extends AbstractMiddleware
@@ -13,7 +13,7 @@ class ProcessMessage extends AbstractMiddleware
     private $sumCounterId;
 
     public function __construct(
-        PersistenceManager $manager,
+        TransactionManager $manager,
         SumCounterService $service,
         string $sumCounterId
     ) {

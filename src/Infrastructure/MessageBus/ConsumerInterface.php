@@ -1,8 +1,6 @@
 <?php
 
-namespace Numbers\Application\MessageBus;
-
-use Numbers\Application\Message;
+namespace Numbers\Infrastructure\MessageBus;
 
 interface ConsumerInterface
 {

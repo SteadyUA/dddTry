@@ -1,8 +1,8 @@
 <?php
 
-namespace Numbers\Application\Persistence;
+namespace Numbers\Infrastructure\Persistence;
 
-class PersistenceManager
+class TransactionManager
 {
     /** @var PersistenceInterface[] */
     private $persistence = [];

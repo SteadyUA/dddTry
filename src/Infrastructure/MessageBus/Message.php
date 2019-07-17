@@ -1,8 +1,6 @@
 <?php
 
-namespace Numbers\Application;
-
-use Numbers\Domain\NumberValue;
+namespace Numbers\Infrastructure\MessageBus;
 
 class Message
 {
@@ -11,13 +9,13 @@ class Message
 
     private static $index = 0;
 
-    public function __construct(NumberValue $number, int $id)
+    public function __construct(string $number, int $id)
     {
         $this->number = $number;
         $this->id = $id;
     }
 
-    public function number(): NumberValue
+    public function number(): string
     {
         return $this->number;
     }
@@ -27,7 +25,12 @@ class Message
         return $this->id;
     }
 
-    public static function nextIdentity(): int
+    public static function create(string $number): Message
+    {
+        return new Message($number, self::nextIdentity());
+    }
+
+    private static function nextIdentity(): int
     {
         return self::$index ++;
     }

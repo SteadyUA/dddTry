@@ -2,6 +2,8 @@
 
 namespace Numbers\Application;
 
+use Numbers\Infrastructure\MessageBus\Message;
+
 /**
  * Based on Chain of responsibility pattern
  */

@@ -1,6 +1,9 @@
 <?php
 
-namespace Numbers\Domain;
+namespace Numbers\Application;
+
+use Numbers\Domain\NumberValue;
+use Numbers\Domain\SumCounterRepositoryInterface;
 
 class SumCounterService
 {
@@ -12,12 +15,11 @@ class SumCounterService
         $this->repository = $repository;
     }
 
-    public function addNumber(string $sumCountId, NumberValue $numberValue): void
+    public function addNumber(string $sumCountId, string $numberValue): void
     {
-        $sumCount = $this->repository->sumCounterOf($sumCountId);
-
-        $sumCount->addNumber($numberValue);
-
+        $number = new NumberValue($numberValue);
+        $sumCount = $this->repository->sumCounterOfId($sumCountId);
+        $sumCount->addNumber($number);
         $this->repository->save($sumCount);
     }
 }

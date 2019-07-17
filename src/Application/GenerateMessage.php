@@ -3,6 +3,7 @@
 namespace Numbers\Application;
 
 use Numbers\Domain\AbstractSequenceService;
+use Numbers\Infrastructure\MessageBus\Message;
 
 class GenerateMessage extends AbstractMiddleware
 {
@@ -16,7 +17,7 @@ class GenerateMessage extends AbstractMiddleware
     public function execute(Message $message = null): void
     {
         $number = $this->sequence->getNextNumber();
-        $message = new Message($number, Message::generateNextId());
+        $message = Message::create($number);
         $this->executeNext($message);
     }
 }

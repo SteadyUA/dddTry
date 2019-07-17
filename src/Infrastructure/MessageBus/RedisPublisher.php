@@ -1,8 +1,7 @@
 <?php
 
-namespace Numbers\Application\MessageBus;
+namespace Numbers\Infrastructure\MessageBus;
 
-use Numbers\Application\Message;
 use Redis;
 
 class RedisPublisher implements PublisherInterface
@@ -21,7 +20,7 @@ class RedisPublisher implements PublisherInterface
         $entryId = '1-' . $message->id();
         $entryData = [
             'id' => $message->id(),
-            'num' => $message->number()->toString(),
+            'num' => $message->number(),
         ];
         $this->redis->xAdd($this->streamName, $entryId, $entryData);
     }

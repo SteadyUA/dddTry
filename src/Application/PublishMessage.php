@@ -2,7 +2,8 @@
 
 namespace Numbers\Application;
 
-use Numbers\Application\MessageBus\PublisherInterface;
+use Numbers\Infrastructure\MessageBus\Message;
+use Numbers\Infrastructure\MessageBus\PublisherInterface;
 
 class PublishMessage extends AbstractMiddleware
 {

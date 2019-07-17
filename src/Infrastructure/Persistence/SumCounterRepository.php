@@ -1,8 +1,7 @@
 <?php
 
-namespace Numbers\Application\Repository;
+namespace Numbers\Infrastructure\Persistence;
 
-use Numbers\Application\Persistence\PersistenceInterface;
 use Numbers\Domain\CounterEntity;
 use Numbers\Domain\NumberValue;
 use Numbers\Domain\SumCounterAggregate;
@@ -27,7 +26,7 @@ class SumCounterRepository implements SumCounterRepositoryInterface
         $this->storage->persist($data);
     }
 
-    public function sumCounterOf(string $sumCountId): SumCounterAggregate
+    public function sumCounterOfId(string $sumCountId): SumCounterAggregate
     {
         // parse composite key
         list($sumId, $counterId) = explode('-', $sumCountId);
