@@ -5,7 +5,6 @@ use Numbers\Application\LimitChecker;
 use Numbers\Application\ConsumeMessage;
 use Numbers\Application\ProcessMessage;
 
-require __DIR__ . '/../vendor/autoload.php';
 $container = include __DIR__ . '/../container.php';
 
 $options = getopt('', ['count:', 'sleep:']);

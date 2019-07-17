@@ -1,15 +1,17 @@
 <?php
 
-use Numbers\Application\DiContainer;
-use Numbers\Application\MessageBus\RedisConsumer;
-use Numbers\Application\MessageBus\RedisPublisher;
-use Numbers\Application\Persistence\DbPersistence;
-use Numbers\Application\Persistence\InMemoryPersistence;
-use Numbers\Application\Persistence\PersistenceManager;
-use Numbers\Application\Repository\SumCounterRepository;
+require __DIR__ . '/vendor/autoload.php';
+
+use Numbers\Application\SumCounterService;
+use Numbers\DiContainer;
+use Numbers\Infrastructure\MessageBus\RedisConsumer;
+use Numbers\Infrastructure\MessageBus\RedisPublisher;
+use Numbers\Infrastructure\Persistence\DbPersistence;
+use Numbers\Infrastructure\Persistence\InMemoryPersistence;
+use Numbers\Infrastructure\Persistence\TransactionManager;
+use Numbers\Infrastructure\Persistence\SumCounterRepository;
 use Numbers\Domain\FibonacciSequenceService;
 use Numbers\Domain\PrimeSequenceService;
-use Numbers\Domain\SumCounterService;
 
 $container = new DiContainer(include(__DIR__ . '/config.php'));
 $container->set('redis', function(DiContainer $container) {
@@ -56,7 +58,7 @@ $container->set('db', function(DiContainer $container) {
     return new PDO($dsn, $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 });
 $container->set('persistence.manager', function() {
-    return new PersistenceManager();
+    return new TransactionManager();
 });
 $container->set('persistence.sumCounter', function(DiContainer $container) {
 //    $persistence = new InMemoryPersistence(true);

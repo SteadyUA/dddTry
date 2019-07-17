@@ -1,6 +1,5 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
 $container = include __DIR__ . '/../container.php';
 
 /** @var Redis $redis */
