@@ -27,7 +27,7 @@ class Message
         return $this->id;
     }
 
-    public static function generateNextId(): int
+    public static function nextIdentity(): int
     {
         return self::$index ++;
     }
